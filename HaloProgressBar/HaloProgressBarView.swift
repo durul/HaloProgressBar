@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-enum HaloProgressAppearanceType {
-    case overlaysEmptyLine
-    case aboveEmptyLine
-    case underEmptyLine
-}
-
 struct HaloProgressBarView: View {
     var value: CGFloat
     var maxValue: CGFloat = 100
@@ -28,28 +22,27 @@ struct HaloProgressBarView: View {
     }
 
     var body: some View {
-        GeometryReader { _ in
-            ZStack {
-                if appearanceType == .underEmptyLine {
-                    trackCircle
-                    progressCircle
-                } else if appearanceType == .aboveEmptyLine {
-                    progressCircle
-                    trackCircle
-                } else {
-                    // overlaysEmptyLine
-                    trackCircle
-                    progressCircle
-                }
-
-                if showValue {
-                    Text("\(Int(progressRatio * 100))%")
-                        .font(font)
-                        .foregroundColor(progressColor)
-                }
+        ZStack {
+            if appearanceType == .underEmptyLine {
+                trackCircle
+                progressCircle
+            } else if appearanceType == .aboveEmptyLine {
+                progressCircle
+                trackCircle
+            } else {
+                // overlaysEmptyLine
+                trackCircle
+                progressCircle
             }
-            .padding(lineWidth / 2)
+
+            if showValue {
+                Text("\(Int(progressRatio * 100))%")
+                    .font(font)
+                    .foregroundColor(progressColor)
+            }
         }
+        .padding(lineWidth / 2)
+
         .aspectRatio(1, contentMode: .fit)
     }
 
